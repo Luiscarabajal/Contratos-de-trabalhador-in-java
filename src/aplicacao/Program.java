@@ -28,7 +28,7 @@ public class Program {
     public static void main(String[] args) throws ParseException {
         
         Locale.setDefault(Locale.US);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         
         Scanner sc = new Scanner(System.in);
@@ -49,8 +49,8 @@ public class Program {
 System.out.print("How many contract to this worckr?  ");
         int n = sc.nextInt();
         
-        for (int i = 0; i < n; i++) {
-            System.out.println("Enter contract "+i+"data");
+        for (int i = 1; i <=n; i++) {
+            System.out.println("Enter contract "+ i +" data");
             System.out.print("Data (DD/MM/YYYY): ");
             Date data = sdf.parse(sc.next());
             System.out.print("Valoue per hours: ");
@@ -58,16 +58,23 @@ System.out.print("How many contract to this worckr?  ");
             System.out.print("Duration(hours): ");
             Integer hours = sc.nextInt();
             
+            //Apos ter os valores coloco no meu objeto
             HourContract contrats = new HourContract(data, valuerHouer, hours);
            worker.addContract(contrats);
             
         }
+        System.out.println();
         System.out.print("Enter month and year to calculate income(MM/YYYY): ");
-        Date mounthYear = sdf.parse(sc.next());
-        cal.setTime(mounthYear);
-        int month = cal.get(Calendar.MONTH);
-        System.out.println("mes é"+mounthYear);
+        String mounthAndYear =sc.next();
+        //recortando minha string e passando para o metodo calculador
+        int month = Integer.parseInt(mounthAndYear.substring(0,2));
+        int year = Integer.parseInt(mounthAndYear.substring(3));
         
+        System.out.print("Name"+worker.getName());
+        System.out.println();
+        System.out.print("Departament"+worker.getDepartament().getName());
+        System.out.println();
+        System.out.print("Income for "+mounthAndYear+" : "+String.format("%.2f",worker.income(year, month)));
         sc.close();
     }
     
